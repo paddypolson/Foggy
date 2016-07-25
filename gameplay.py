@@ -1,6 +1,7 @@
 from random import randint, choice
 
 import pygame as pg
+import pygame.gfxdraw as gfxdraw
 
 from prepare import GFX, SCREEN_RECT
 from state_engine import GameState
@@ -41,6 +42,8 @@ class Gameplay(GameState):
         w, h = SCREEN_RECT.size
         self.all_sprites = pg.sprite.LayeredUpdates()
         self.background = make_background((w, h))
+        self.fog = pg.Surface((w, h), pg.SRCALPHA)
+        self.fog.fill((0, 0, 0, 255))
         self.player = Player(SCREEN_RECT.center, self.all_sprites)
         self.wolves = pg.sprite.Group()
         for _ in range(10):
@@ -61,6 +64,14 @@ class Gameplay(GameState):
             if event.key == pg.K_ESCAPE:
                 self.quit = True
         self.player.get_event(event)
+
+    def render_fog(self):
+
+        self.fog.fill((0, 0, 0, 255))
+        # self.fog.blit(self.player.seen, (0, 0))
+        m = 255/float(200)
+        for i in range(200, 1, -1):
+            pg.draw.circle(self.fog, (0, 0, 0, i*m), self.player.get_int_pos(), i)
         
     def update(self, dt):
         self.player.update(dt)
@@ -89,3 +100,5 @@ class Gameplay(GameState):
     def draw(self, surface):
         surface.blit(self.background, (0, 0))
         self.all_sprites.draw(surface)
+        self.render_fog()
+        surface.blit(self.fog, (0, 0))

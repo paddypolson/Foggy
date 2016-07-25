@@ -78,6 +78,7 @@ class Game(object):
         """
         while not self.done:
             dt = self.clock.tick(self.fps)
+            # print self.clock.get_fps()
             self.event_loop()
             self.update(dt)
             self.draw()
