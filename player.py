@@ -37,8 +37,6 @@ class Player(pg.sprite.Sprite):
         self.speed = .1
         self.footprint = pg.Rect(0, 0, 30, 6)
         self.footprint.midbottom = self.rect.midbottom
-        self.seen = pg.Surface(SCREEN_RECT.size)
-        self.seen.fill((0, 0, 0, 255))
         
     def collide(self, other):     
         rect = other.footprint
@@ -92,9 +90,6 @@ class Player(pg.sprite.Sprite):
             self.rect = r
             self.pos = self.rect.center
         self.footprint.midbottom = self.rect.midbottom
-
-        # Add to seen surface
-        pg.draw.circle(self.seen, (0, 0, 0, 0), self.get_int_pos(), 200)
         
     def draw(self, surface):
         surface.blit(self.image, self.rect)    
