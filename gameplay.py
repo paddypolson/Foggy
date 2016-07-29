@@ -7,6 +7,7 @@ from prepare import GFX, SCREEN_RECT
 from state_engine import GameState
 from player import Player
 from wolf import Wolf
+from shadow import Shadow
 from tools import grayscale
 
 
@@ -79,14 +80,24 @@ class Gameplay(GameState):
             Wolf(pos, self.wolves, self.all_sprites)
 
         self.trees = pg.sprite.Group()
-        for _ in range(25):
+        for _ in range(1):
             pos = randint(0, w), randint(0, h)
             Tree(pos, self.trees, self.all_sprites)
 
         # Bake the background
         self.background = make_background((w, h), self.trees)
 
+        # Create shadows
+        self.shadows = []
+        for tree in self.trees:
+            self.shadows.append(Shadow(tree.footprint))
+
         self.player = Player(SCREEN_RECT.center, self.all_sprites)
+
+    def draw_shadows(self, surf):
+
+        for shadow in self.shadows:
+            shadow.draw(surf)
 
     def startup(self, persistent):
         self.persist = persistent
@@ -103,6 +114,11 @@ class Gameplay(GameState):
         self.player.update(dt)
         self.wolves.update(dt)
         self.foggy.update(dt)
+        for shadow in self.shadows:
+            shadow.update(self.player.pos)
+
+        # Debug here
+        print self.shadows[0].poly
         player_hits = pg.sprite.spritecollide(self.player, self.trees,
                     False, collided=footprint_collide)
         for tree in player_hits:
@@ -126,5 +142,6 @@ class Gameplay(GameState):
 
     def draw(self, surface):
         surface.blit(self.background, (0, 0))
+        self.draw_shadows(surface)
         self.all_sprites.draw(surface)
         #self.foggy.draw(surface)
