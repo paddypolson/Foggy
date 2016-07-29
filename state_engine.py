@@ -24,11 +24,14 @@ class Game(object):
         self.done = False
         self.screen = screen
         self.clock = pg.time.Clock()
-        self.fps = 120
+        self.fps = 60
         self.states = states
         self.state_name = start_state
         self.state = self.states[self.state_name]
         self.fullscreen = False
+
+        self.fps_display = pg.font.Font(None, 50)
+        self.fps_colour = pg.Color(255, 255, 255)
 
     def toggle_fullscreen(self):
         self.fullscreen = not self.fullscreen
@@ -78,10 +81,10 @@ class Game(object):
         """
         while not self.done:
             dt = self.clock.tick(self.fps)
-            print self.clock.get_fps()
             self.event_loop()
             self.update(dt)
             self.draw()
+            self.screen.blit(self.fps_display.render(str(int(self.clock.get_fps())), False, self.fps_colour), (0, 0))
             pg.display.update()
 
 
