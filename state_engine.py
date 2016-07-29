@@ -24,7 +24,7 @@ class Game(object):
         self.done = False
         self.screen = screen
         self.clock = pg.time.Clock()
-        self.fps = 60
+        self.fps = 120
         self.states = states
         self.state_name = start_state
         self.state = self.states[self.state_name]
@@ -78,7 +78,7 @@ class Game(object):
         """
         while not self.done:
             dt = self.clock.tick(self.fps)
-            # print self.clock.get_fps()
+            print self.clock.get_fps()
             self.event_loop()
             self.update(dt)
             self.draw()
