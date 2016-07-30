@@ -80,7 +80,7 @@ class Gameplay(GameState):
             Wolf(pos, self.wolves, self.all_sprites)
 
         self.trees = pg.sprite.Group()
-        for _ in range(1):
+        for _ in range(25):
             pos = randint(0, w), randint(0, h)
             Tree(pos, self.trees, self.all_sprites)
 
@@ -118,7 +118,7 @@ class Gameplay(GameState):
             shadow.update(self.player.pos)
 
         # Debug here
-        print self.shadows[0].poly
+        #print self.shadows[0].poly
         player_hits = pg.sprite.spritecollide(self.player, self.trees,
                     False, collided=footprint_collide)
         for tree in player_hits:
