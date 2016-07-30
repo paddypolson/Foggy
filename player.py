@@ -1,6 +1,7 @@
 from itertools import cycle
 
 import pygame as pg
+import numpy
 
 from prepare import GFX, SCREEN_RECT
 from tools import strip_from_sheet as strip
