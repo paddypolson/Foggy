@@ -1,7 +1,6 @@
 import os
 import copy
 import json
-import numpy
 import pygame as pg
 
 
@@ -127,20 +126,3 @@ def lerp(color_1, color_2, lerp_val):
         raise ValueError("Lerp value must be in the range [0,1] inclusive.")
     new = [int(a*(1-lerp_val)+b*lerp_val) for a, b in  zip(color_1, color_2)]
     return pg.Color(*new)
-
-
-def grayscale(surf):
-
-    arr = pg.surfarray.array3d(surf)
-
-    avgs = [[(r*0.298 + g*0.587 + b*0.114) for (r, g, b) in col] for col in arr]
-    arr = numpy.array([[[avg, avg, avg] for avg in col] for col in avgs])
-    return pg.surfarray.make_surface(arr)
-
-
-def grayscale_array(surf):
-
-    arr = pg.surfarray.array3d(surf)
-
-    avgs = [[(r*0.298 + g*0.587 + b*0.114) for (r, g, b) in col] for col in arr]
-    return numpy.array([[[avg, avg, avg] for avg in col] for col in avgs])
