@@ -2,7 +2,7 @@ from __future__ import division
 __author__ = 'Paddy'
 
 import pygame.gfxdraw as pg
-from math import atan2, cos, sin, degrees, pi
+from math import atan2, cos, sin
 
 
 class Shadow:
